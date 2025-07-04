@@ -1,0 +1,33 @@
+-- SELECT title,director FROM movies 
+-- WHERE release_year > 2010
+-- 
+SELECT *
+
+-- SELECT birthdate,active_since from actors
+-- where active_since > 2000
+
+-- SELECT movies.title, movie_genre.movie_id, genres.name
+-- 
+-- FROM movie_genre
+-- JOIN movies ON movie_genre.movie_id = movies.id
+-- JOIN genres ON movie_genre.genre_id = genres.id;
+
+-- SELECT director,avg(rating) as rating
+-- FROM movies
+-- group by director;
+-- 
+-- SELECT movies.title,COUNT(genre_id) as genre_id
+-- FROM movie_genre
+-- JOIN movies ON movie_genre.movie_id = movies.id
+-- JOIN genres ON movie_genre.genre_id = genres.id
+-- GROUP by movies.title
+-- HAVING count(genre_id) > 1;
+
+
+SELECT name,movies.title,sum(box_office_million_usd) as box_office_million_usd
+from movie_actor
+full join actors on movie_actor.actor_id=actors.id
+full join movies on movie_actor.movie_id=movies.id
+
+GROUP by name
+ORDER by  box_office_million_usd DESC;
