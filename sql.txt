@@ -31,3 +31,110 @@ full join movies on movie_actor.movie_id=movies.id
 
 GROUP by name
 ORDER by  box_office_million_usd DESC;
+
+
+CREATE TABLE actors (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    birthdate DATE,
+    nationality TEXT,
+    gender TEXT,
+    net_worth_million_usd REAL,
+    active_since INTEGER
+);
+
+Execute Sql
+INSERT INTO actors (name, birthdate, nationality, gender, net_worth_million_usd, active_since) VALUES
+('Leonardo DiCaprio', '1974-11-11', 'American', 'Male', 300.0, 1989),
+('Scarlett Johansson', '1984-11-22', 'American', 'Female', 165.0, 1994),
+('Morgan Freeman', '1937-06-01', 'American', 'Male', 250.0, 1964),
+('Tom Hanks', '1956-07-09', 'American', 'Male', 400.0, 1980),
+('Natalie Portman', '1981-06-09', 'Israeli-American', 'Female', 90.0, 1994),
+('Robert Downey Jr.', '1965-04-04', 'American', 'Male', 300.0, 1970),
+('Emma Stone', '1988-11-06', 'American', 'Female', 40.0, 2004),
+('Brad Pitt', '1963-12-18', 'American', 'Male', 400.0, 1987),
+('Jennifer Lawrence', '1990-08-15', 'American', 'Female', 160.0, 2006),
+('Johnny Depp', '1963-06-09', 'American', 'Male', 150.0, 1984);
+
+
+CREATE TABLE genres (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL
+);
+
+INSERT INTO genres (name) VALUES
+('Action'),
+('Drama'),
+('Sci-Fi'),
+('Thriller'),
+('Comedy'),
+('Adventure'),
+('Romance');
+
+
+CREATE TABLE movies (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT NOT NULL,
+    release_year INTEGER,
+    duration_minutes INTEGER,
+    rating REAL,
+    budget_million_usd REAL,
+    box_office_million_usd REAL,
+    language TEXT,
+    director TEXT
+);
+
+INSERT INTO movies (title, release_year, duration_minutes, rating, budget_million_usd, box_office_million_usd, language, director) VALUES
+('Inception', 2010, 148, 8.8, 160.0, 829.9, 'English', 'Christopher Nolan'),
+('The Avengers', 2012, 143, 8.0, 220.0, 1518.8, 'English', 'Joss Whedon'),
+('Forrest Gump', 1994, 142, 8.8, 55.0, 678.2, 'English', 'Robert Zemeckis'),
+('The Matrix', 1999, 136, 8.7, 63.0, 466.3, 'English', 'Lana Wachowski & Lilly Wachowski'),
+('Fight Club', 1999, 139, 8.8, 63.0, 100.9, 'English', 'David Fincher'),
+('The Shawshank Redemption', 1994, 142, 9.3, 25.0, 73.3, 'English', 'Frank Darabont'),
+('Iron Man', 2008, 126, 7.9, 140.0, 585.2, 'English', 'Jon Favreau'),
+('Black Swan', 2010, 108, 8.0, 13.0, 329.4, 'English', 'Darren Aronofsky'),
+('La La Land', 2016, 128, 8.0, 30.0, 448.9, 'English', 'Damien Chazelle'),
+('Pirates of the Caribbean', 2003, 143, 8.0, 140.0, 654.3, 'English', 'Gore Verbinski');
+
+
+CREATE TABLE movie_actor (
+    movie_id INTEGER,
+    actor_id INTEGER,
+    PRIMARY KEY (movie_id, actor_id),
+    FOREIGN KEY (movie_id) REFERENCES movies(id),
+    FOREIGN KEY (actor_id) REFERENCES actors(id)
+);
+
+INSERT INTO movie_actor (movie_id, actor_id) VALUES
+(1, 1), -- Inception - Leonardo DiCaprio
+(2, 2), -- Avengers - Scarlett Johansson
+(2, 6), -- Avengers - Robert Downey Jr.
+(3, 4), -- Forrest Gump - Tom Hanks
+(4, 3), -- Matrix - Morgan Freeman (mocked)
+(5, 8), -- Fight Club - Brad Pitt
+(6, 3), -- Shawshank - Morgan Freeman
+(7, 6), -- Iron Man - Robert Downey Jr.
+(8, 5), -- Black Swan - Natalie Portman
+(9, 7), -- La La Land - Emma Stone
+(10, 10); -- Pirates - Johnny Depp
+
+
+CREATE TABLE movie_genre (
+    movie_id INTEGER,
+    genre_id INTEGER,
+    PRIMARY KEY (movie_id, genre_id),
+    FOREIGN KEY (movie_id) REFERENCES movies(id),
+    FOREIGN KEY (genre_id) REFERENCES genres(id)
+);
+
+INSERT INTO movie_genre (movie_id, genre_id) VALUES
+(1, 1), (1, 3),           -- Inception: Action, Sci-Fi
+(2, 1), (2, 6),           -- Avengers: Action, Adventure
+(3, 2), (3, 5),           -- Forrest Gump: Drama, Comedy
+(4, 1), (4, 3),           -- Matrix: Action, Sci-Fi
+(5, 2), (5, 4),           -- Fight Club: Drama, Thriller
+(6, 2),                  -- Shawshank: Drama
+(7, 1),                  -- Iron Man: Action
+(8, 2), (8, 4),           -- Black Swan: Drama, Thriller
+(9, 5), (9, 7),           -- La La Land: Comedy, Romance
+(10, 1), (10, 6);         -- Pirates: Action, Adventure
