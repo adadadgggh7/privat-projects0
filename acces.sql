@@ -1,4 +1,4 @@
--- Таблица Films
+
 CREATE TABLE Films (
     MovieID AUTOINCREMENT PRIMARY KEY,
     Title TEXT(100) NOT NULL,
@@ -10,7 +10,7 @@ CREATE TABLE Films (
     ReleaseDate DATE
 );
 
--- Таблица Halls
+
 CREATE TABLE Halls (
     HallID AUTOINCREMENT PRIMARY KEY,
     HallName TEXT(50) NOT NULL,
@@ -18,7 +18,7 @@ CREATE TABLE Halls (
     Type TEXT(20)
 );
 
--- Таблица Screenings
+
 CREATE TABLE Screenings (
     ScreeningID AUTOINCREMENT PRIMARY KEY,
     MovieID LONG NOT NULL,
@@ -30,7 +30,7 @@ CREATE TABLE Screenings (
     CONSTRAINT FK_Hall FOREIGN KEY (HallID) REFERENCES Halls(HallID)
 );
 
--- Таблица Seats
+
 CREATE TABLE Seats (
     SeatID AUTOINCREMENT PRIMARY KEY,
     HallID LONG NOT NULL,
@@ -40,7 +40,7 @@ CREATE TABLE Seats (
     CONSTRAINT FK_SeatHall FOREIGN KEY (HallID) REFERENCES Halls(HallID)
 );
 
--- Таблица Customers
+
 CREATE TABLE Customers (
     CustomerID AUTOINCREMENT PRIMARY KEY,
     FirstName TEXT(50) NOT NULL,
@@ -50,7 +50,7 @@ CREATE TABLE Customers (
     RegistrationDate DATETIME DEFAULT NOW()
 );
 
--- Таблица Bookings
+
 CREATE TABLE Bookings (
     BookingID AUTOINCREMENT PRIMARY KEY,
     CustomerID LONG NOT NULL,
@@ -62,7 +62,7 @@ CREATE TABLE Bookings (
     CONSTRAINT FK_Screening FOREIGN KEY (ScreeningID) REFERENCES Screenings(ScreeningID)
 );
 
--- Таблица Tickets
+
 CREATE TABLE Tickets (
     TicketID AUTOINCREMENT PRIMARY KEY,
     BookingID LONG NOT NULL,
